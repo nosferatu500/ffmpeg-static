@@ -53,7 +53,7 @@ async function downloadFile(url, targetFile) {
     })
 }
 
-const release = pkg['version']
+const release = pkg['tag']
 
 const arch = OS.arch()
 const platform = OS.platform()
