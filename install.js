@@ -25,31 +25,33 @@ try {
     if (err && err.code !== 'ENOENT') exitOnError(err)
 }
 
-async function downloadFile(url, targetFile) {
-    return await new Promise((resolve, reject) => {
-        Https.get(url, response => {
-            const code = response.statusCode ?? 0
+function downloadFile(url, targetFile) {
+    const client = Https.get(url, response => {
+        const code = response.statusCode ?? 0
 
-            if (code >= 400) {
-                return reject(new Error(response.statusMessage))
-            }
+        if (code >= 400) {
+            const error = new Error(response.statusMessage)
+            exitOnError(error)
+        }
 
-            // handle redirects
-            if (code > 300 && code < 400 && !!response.headers.location) {
-                return downloadFile(response.headers.location, targetFile)
-            }
+        // handle redirects
+        if (code > 300 && code < 400 && !!response.headers.location) {
+            downloadFile(response.headers.location, targetFile)
+            return
+        }
 
-            // save the file to disk
-            const fileWriter = Fs
-                .createWriteStream(targetFile)
-                .on('finish', () => {
-                    resolve({})
-                })
+        // save the file to disk
+        const fileWriter = Fs
+            .createWriteStream(targetFile)
+            .on('finish', () => {
+                Fs.chmodSync(ffmpegPath, 0o755) // make executable
+                client.end()
+                process.exit(0)
+            })
 
-            response.pipe(fileWriter)
-        }).on('error', error => {
-            reject(error)
-        })
+        response.pipe(fileWriter)
+    }).on('error', error => {
+        exitOnError(error)
     })
 }
 
@@ -62,7 +64,3 @@ const baseUrl = `https://github.com/nosferatu500/ffmpeg-static/releases/download
 const downloadUrl = platform === 'win32' ? `${baseUrl}/${platform}-${arch}.exe` : `${baseUrl}/${platform}-${arch}`
 
 downloadFile(downloadUrl, ffmpegPath)
-    .then(() => {
-        Fs.chmodSync(ffmpegPath, 0o755) // make executable
-    })
-    .catch(exitOnError)
