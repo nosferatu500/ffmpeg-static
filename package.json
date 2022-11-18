@@ -1,5 +1,5 @@
 {
-    "name": "ffmpeg-static",
+    "name": "@nosferatu500/ffmpeg-static",
     "version": "5.1.2",
     "description": "ffmpeg static binaries for MacOS and Windows",
     "main": "index.js",
@@ -25,6 +25,9 @@
         "mac",
         "windows"
     ],
+    "publishConfig": {
+        "access": "public"
+    },
     "author": "Vitalii Shvetsov",
     "bugs": {
         "url": "https://github.com/nosferatu500/ffmpeg-static/issues"
