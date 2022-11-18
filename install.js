@@ -59,7 +59,7 @@ const arch = OS.arch()
 const platform = OS.platform()
 
 const baseUrl = `https://github.com/nosferatu500/ffmpeg-static/releases/download/${release}`
-const downloadUrl = `${baseUrl}/${platform}-${arch}`
+const downloadUrl = platform === 'win32' ? `${baseUrl}/${platform}-${arch}.exe` : `${baseUrl}/${platform}-${arch}`
 
 downloadFile(downloadUrl, ffmpegPath)
     .then(() => {
