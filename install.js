@@ -61,6 +61,8 @@ const arch = OS.arch()
 const platform = OS.platform()
 
 const baseUrl = `https://github.com/nosferatu500/ffmpeg-static/releases/download/${release}`
-const downloadUrl = platform === 'win32' ? `${baseUrl}/${platform}-${arch}.exe` : `${baseUrl}/${platform}-${arch}`
+const downloadUrl = platform === 'win32' ? `${baseUrl}/${platform}-${arch}.exe` : `${baseUrl}/${platform}-x64`
+// TODO: Use this when arm64 build available
+// const downloadUrl = platform === 'win32' ? `${baseUrl}/${platform}-${arch}.exe` : `${baseUrl}/${platform}-${arch}`
 
 downloadFile(downloadUrl, ffmpegPath)
