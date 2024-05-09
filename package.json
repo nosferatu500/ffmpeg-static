@@ -1,7 +1,7 @@
 {
     "name": "@nosferatu500/ffmpeg-static",
-    "version": "6.1.0",
-    "tag": "6.1.0",
+    "version": "6.1.1",
+    "tag": "6.1.1",
     "description": "ffmpeg static binaries for MacOS and Windows",
     "main": "index.js",
     "files": [
@@ -34,7 +34,7 @@
         "url": "https://github.com/nosferatu500/ffmpeg-static/issues"
     },
     "engines": {
-        "node": ">=18"
+        "node": ">=20"
     },
     "dependencies": {},
     "devDependencies": {}
