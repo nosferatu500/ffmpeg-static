@@ -4,7 +4,7 @@ const OS = require('os')
 const path = require('path')
 
 const binaries = Object.assign(Object.create(null), {
-    darwin: ['x64'],
+    darwin: ['x64', 'arm64'],
     win32: ['x64']
 })
 
